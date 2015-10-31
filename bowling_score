@@ -1,0 +1,133 @@
+# input your bowling sheet and this program will output your score
+
+def bowling_score(score_card):
+    score_array = score_card.split()    
+    total = 0
+   
+    for index, n in enumerate(score_array):
+ #       print index
+        print total
+        
+        #for tenth frame
+        if index == len(score_array)-1:
+            total = total + last_frame(n)
+ #           print ninth_frame_strike(n)
+
+        #if ninth frame or lower    
+        if index < len(score_array)-1:
+            if n== 'X':
+                #for the ninth frame
+                if index == len(score_array)-2:
+                    total = total + 10+ ninth_frame_strike(score_array[index+1])
+                    print index
+                #taking care of the issue when there are consecutive strikes
+                elif score_array[index+1] == 'X' and index < len(score_array)-2:
+                    total = total +10 + strike(score_array[index+1]) + spare(score_array[index+2])
+                else:
+                    total = total + 10 + strike(score_array[index+1])
+            else:
+                if is_number(n[0]) == True:
+                    total = total + int(n[0])
+                    if n[1] == '/':                            
+                        total = total + (10 - int(n[0])) + spare(score_array[index+1])
+                    if is_number(n[1]) == True:
+                        total = total + int(n[1])
+                    
+                if is_number(n[0]) == False:
+                    if n[1] == '/':
+                        total = total + (10) + spare(score_array[index+1])
+                        print (10) + spare(score_array[index+1])
+                    if is_number(n[1]) == True:
+                        total = total + int(n[1])
+                    
+    print total
+    print score_array
+   
+def strike(frame):
+    total = 0
+    if frame[0] == 'X':
+        total = total + 10
+    else:
+        if is_number(frame[0]) == True:
+            total = total + int(frame[0])
+            if frame[1] == '/':
+                total = total + (10 - int(frame[0]))
+            if is_number(frame[1]) == True:
+                total = total + int(frame[1])
+        if is_number(frame[0]) == False:
+            if frame[1] == '/':
+                total = total + 10
+
+    return total
+
+def spare(frame):
+    total = 0
+    if frame[0] =='X':
+        total = total +10
+    else:
+        if is_number(frame[0]) == True:
+            total = total + int(frame[0])
+    
+    return total
+
+def ninth_frame_strike(frame):
+    
+    total = 0
+    if frame[0] == 'X':
+        total = total + 10
+    if is_number(frame[0]) == True:
+        total = total + int(frame[0])
+
+    if frame[1] =='X':
+        total = total + 10
+    if is_number(frame[1]) == True:
+        total = total + int(frame[1])
+
+    if frame[1] =='/':
+        total = total + (10-int(frame[0]))
+
+    return total 
+
+
+def last_frame(frame):
+    total = 0
+
+   
+    if frame[0] == 'X':
+        total = total + 10
+        if is_number(frame[1]) == True:
+            total = total + int(frame[1])
+        if frame[1] == 'X':
+            total = total + 10
+        if is_number(frame[2]) == True:
+            total = total + int(frame[2])
+        if frame[2] == 'X':
+            total = total + 10
+            
+    else:
+        if is_number(frame[0]) == True:
+            total = total + int(frame[0])
+            if frame[1] == '/':
+                total = total + (10 - int(frame[0]))
+                if frame[2] == 'X':
+                    total = total + 10
+                if is_number(frame[2]) == True:
+                    total = total + int(frame[2])
+            if is_number(frame[1]) == True:
+                total = total + int(frame[1])
+        if is_number(frame[0]) == False:
+            if frame[1] == '/':
+                total = total + 10
+                
+        
+    return total
+
+def is_number(number):
+    
+    return number.isdigit()
+    
+
+score_card = raw_input('Please put in your bowling sheet:')
+
+bowling_score(score_card)
+
