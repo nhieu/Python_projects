@@ -1,11 +1,9 @@
-# input your bowling sheet and this program will output your score
 
 def bowling_score(score_card):
     score_array = score_card.split()    
     total = 0
    
     for index, n in enumerate(score_array):
- #       print index
         print total
         
         #for tenth frame
@@ -18,8 +16,7 @@ def bowling_score(score_card):
             if n== 'X':
                 #for the ninth frame
                 if index == len(score_array)-2:
-                    total = total + 10+ ninth_frame_strike(score_array[index+1])
-                    print index
+                    total = total + 10+ strike(score_array[index+1])
                 #taking care of the issue when there are consecutive strikes
                 elif score_array[index+1] == 'X' and index < len(score_array)-2:
                     total = total +10 + strike(score_array[index+1]) + spare(score_array[index+2])
@@ -38,11 +35,9 @@ def bowling_score(score_card):
                         total = total + (10) + spare(score_array[index+1])
                         print (10) + spare(score_array[index+1])
                     if is_number(n[1]) == True:
-                        total = total + int(n[1])
-                    
+                        total = total + int(n[1])                    
     print total
-    print score_array
-   
+      
 def strike(frame):
     total = 0
     if frame[0] == 'X':
@@ -57,8 +52,12 @@ def strike(frame):
         if is_number(frame[0]) == False:
             if frame[1] == '/':
                 total = total + 10
-
+                
+    if len(frame) == 3:
+        if frame[1] == 'X':
+            total = total + 10
     return total
+
 
 def spare(frame):
     total = 0
@@ -70,28 +69,8 @@ def spare(frame):
     
     return total
 
-def ninth_frame_strike(frame):
-    
-    total = 0
-    if frame[0] == 'X':
-        total = total + 10
-    if is_number(frame[0]) == True:
-        total = total + int(frame[0])
-
-    if frame[1] =='X':
-        total = total + 10
-    if is_number(frame[1]) == True:
-        total = total + int(frame[1])
-
-    if frame[1] =='/':
-        total = total + (10-int(frame[0]))
-
-    return total 
-
-
 def last_frame(frame):
     total = 0
-
    
     if frame[0] == 'X':
         total = total + 10
@@ -127,7 +106,7 @@ def is_number(number):
     return number.isdigit()
     
 
-score_card = raw_input('Please put in your bowling sheet:')
+score_card = raw_input('Please put in your bowling score:')
 
 bowling_score(score_card)
 
