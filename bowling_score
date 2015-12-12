@@ -1,3 +1,8 @@
+'''
+Author : Nhieu Duong
+This program is generates your bowling score given the scorecard. The program first prompts the user to input their score card. 
+For example the input '62 71  X 9- 8/  X  X 35 72 5/8' will output a score of 140
+
 
 def bowling_score(score_card):
     score_array = score_card.split()    
