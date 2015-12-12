@@ -1,3 +1,10 @@
+'''
+Author :  Nhieu Duong
+This project simulates the Battleship game by randomly generating 1 battlehsip, 1 cruiser and 1 submarine. The program 
+then prompts the user to guess where on the board is the ship. 
+'''
+
+
 from random import randint
 
 board = []
