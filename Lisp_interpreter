@@ -1,0 +1,94 @@
+'''
+Author: Nhieu Duong
+This program is a simple program using recursion to build a Lisp Interpreter.
+There are five built-in functions in this program, mainly the four algebraic
+computations and the 'eq?' symbol.
+
+
+
+'''
+
+
+
+def lisp_interpreter(symbol_tree):
+
+    if symbol_tree[0] == '+':
+        return float(symbol_tree[1]) + float(symbol_tree[2])
+    elif symbol_tree[0] == '-':
+        return float(symbol_tree[1]) - float(symbol_tree[2])
+    elif symbol_tree[0] == '*':
+        return float(symbol_tree[1]) * float(symbol_tree[2])
+    elif symbol_tree[0] == '/':
+        if symbol_tree[2] == '0':
+            print 'cannot divide by zero'
+            return
+        else:
+            return float(symbol_tree[1])/float(symbol_tree[2])
+    elif symbol_tree[0] == 'eq?':
+        if symbol_tree[1] == symbol_tree[2]:
+            return True
+        else:
+            return False
+
+   
+   
+def breakup_symbols(lisp_list):    
+    return lisp_list.replace('(',' ( ').replace(')', ' ) ').split()
+    
+    
+
+def build_tree(symbol_array):
+
+    if len(symbol_array)== 0:
+        print 'The array is empty !'
+        return
+    first_element = symbol_array.pop(0)
+    if first_element == '(':
+        symbol_tree = []
+        while symbol_array[0] != ')':
+            symbol_tree.append(build_tree(symbol_array))
+        first_element = symbol_array.pop(0)
+        return symbol_tree
+
+    else:
+        return first_element
+
+
+def evaluate(symbol_tree):
+
+    if len(symbol_tree) == 3:
+        return lisp_interpreter(symbol_tree)
+
+    if len(symbol_tree) < 3:
+        print 'Cannot evaluate, list length cannot be less than 3'
+        return
+
+
+    for index,i in enumerate(symbol_tree):        
+        if len(i) == 3:
+            new_value = lisp_interpreter(i)
+            symbol_tree[index] = new_value
+
+            #checking to see if the new array has only 3 elements left, if so
+            #call lisp_interpreter one last time and return the value, else call
+            # evaluate again
+            
+            if len(symbol_tree) == 3:
+                return lisp_interpreter(symbol_tree)
+            else:    
+                return evaluate(symbol_tree)
+
+            
+    return symbol_tree
+
+                         
+    
+lisp_list = raw_input('Please input your code for Lisp to interpret:')
+symbol_array = breakup_symbols(lisp_list)
+symbol_tree =  build_tree(symbol_array)
+print evaluate(symbol_tree)
+
+
+    
+    
+
