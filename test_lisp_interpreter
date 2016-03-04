@@ -1,0 +1,13 @@
+
+''' unit test for lisp_interpreter '''
+
+import unittest
+from lisp_interpreter import lisp_interpreter
+
+class Test_lisp_interpreter(unittest.TestCase):
+
+    def test_divide_by_zero(self):
+        self.assertIsNone(lisp_interpreter('[/ 4 0]'))
+
+if __name__ == '__main__':
+    unittest.main()
